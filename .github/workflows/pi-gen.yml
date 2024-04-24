@@ -1,42 +1,53 @@
-name: Build and upload image
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-  
+jobs:
+  pi-gen-nodejs:
+    runs-on: ubuntu-latest
+    steps:
+      # Create a stage 'test-stage' instructing to add Nodesource repo and install nodejs as dependency
+      - run: |
+          mkdir -p test-stage/package-test &&
+          {
+          cat > test-stage/package-test/00-run-chroot.sh <<-EOF
+          #!/bin/bash
+          apt-get install -y curl
+          curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+          EOF
+          } &&
+          chmod +x test-stage/package-test/00-run-chroot.sh &&
+          echo "nodejs" > test-stage/package-test/01-packages &&
+          {
+          cat > test-stage/prerun.sh <<-EOF
+          #!/bin/bash -e
+          if [ ! -d "\${ROOTFS_DIR}" ]; then
+            copy_previous
+          fi
+          EOF
+          } &&
+          chmod +x test-stage/prerun.sh
+
+      - uses: usimd/pi-gen-action@v1
+        with:
+          image-name: test
+          stage-list: stage0 stage1 stage2 ./test-stage
+
+jobs:
+  pi-gen-verbose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: usimd/pi-gen-action@v1
+        with:
+          image-name: test
+          verbose-output: true
+
 jobs:
   pi-gen-upload-image:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - uses: usimd/pi-gen-action@v1
         id: build
         with:
           image-name: test
-          # List of stage name to execute in given order. Relative and absolute paths to 
-          # custom stage directories are allowed here. Note that by default pi-gen exports 
-          # images in stage2 (lite), stage4 and stage5. You probably want to hook in custom 
-          # stages before one of the exported stages. Otherwise, the action will make sure 
-          # any custom stage will include an image export directive.
-          stage-list: stage0 stage1 stage2 stage3 stage4 stage4a # Using stage4a leads to not enough disk space on GitHub Actions?
-          export-last-stage-only: true
 
-      - name: Delete existing release and tag
-        if: success()
-        id: create-and-upload-release
-        run: |
-          git push --delete origin continuous || true # Delete existing release and tag
-
-      - name: Wait a bit
-        # Prevents draft releases getting created 
-        run: sleep 2
-        
-      - name: Upload to GitHub Releases
-        uses: softprops/action-gh-release@v1
+      - uses: actions/upload-artifact@v3
         with:
-          files: |
-            ${{ steps.build.outputs.image-path }}
-          tag_name: continuous
-          target_commitish: ${{ github.sha }}
-          draft: false
+          name: pi-gen-image
+          path: ${{ steps.build.outputs.image-path }}
