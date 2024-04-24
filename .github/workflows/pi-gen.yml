@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Create a stage 'test-stage' instructing to add Nodesource repo and install nodejs as dependency
-      - run: |
+      - name: Setup test-stage
+        run: |
           mkdir -p test-stage/package-test &&
           {
           cat > test-stage/package-test/00-run-chroot.sh <<-EOF
@@ -30,8 +31,15 @@ jobs:
           EOF
           } &&
           chmod +x test-stage/prerun.sh
-
-      - uses: usimd/pi-gen-action@v1
+      - name: Build pi-gen with test-stage
+        uses: usimd/pi-gen-action@v1
         with:
           image-name: test
           stage-list: stage0 stage1 stage2 ./test-stage
+          verbose-output: true
+
+      - name: Upload pi-gen image
+        uses: actions/upload-artifact@v3
+        with:
+          name: pi-gen-image
+          path: ${{ steps.build.outputs.image-path }}
