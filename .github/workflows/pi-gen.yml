@@ -33,6 +33,7 @@ jobs:
           chmod +x test-stage/prerun.sh
       - name: Build pi-gen with test-stage
         uses: usimd/pi-gen-action@v1
+        id: build
         with:
           image-name: test
           stage-list: stage0 stage1 stage2 ./test-stage
