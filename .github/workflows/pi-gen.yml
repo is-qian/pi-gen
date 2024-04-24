@@ -9,6 +9,7 @@ jobs:
   pi-gen-nodejs:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Build pi-gen with test-stage
         uses: usimd/pi-gen-action@v1
         id: build
