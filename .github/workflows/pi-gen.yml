@@ -1,8 +1,15 @@
+name: Build and upload image
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  
 jobs:
-  pi-gen-nodejs:
+  pi-gen-upload-image:
     runs-on: ubuntu-latest
     steps:
-      # Create a stage 'test-stage' instructing to add Nodesource repo and install nodejs as dependency
+
       - run: |
           mkdir -p test-stage/package-test &&
           {
@@ -23,23 +30,21 @@ jobs:
           EOF
           } &&
           chmod +x test-stage/prerun.sh
-
       - uses: usimd/pi-gen-action@v1
         with:
           image-name: test
           stage-list: stage0 stage1 stage2 ./test-stage
 
-  pi-gen-verbose:
-    runs-on: ubuntu-latest
-    steps:
+      - name: pi-gen-verbose
+        if: success()
+        id: pi-gen-verbose
       - uses: usimd/pi-gen-action@v1
         with:
           image-name: test
           verbose-output: true
 
-  pi-gen-upload-image:
-    runs-on: ubuntu-latest
-    steps:
+
+      - name: Upload to GitHub Releases
       - uses: usimd/pi-gen-action@v1
         id: build
         with:
