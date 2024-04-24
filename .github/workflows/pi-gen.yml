@@ -29,7 +29,6 @@ jobs:
           image-name: test
           stage-list: stage0 stage1 stage2 ./test-stage
 
-jobs:
   pi-gen-verbose:
     runs-on: ubuntu-latest
     steps:
@@ -38,7 +37,6 @@ jobs:
           image-name: test
           verbose-output: true
 
-jobs:
   pi-gen-upload-image:
     runs-on: ubuntu-latest
     steps:
