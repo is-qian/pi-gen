@@ -9,7 +9,7 @@ jobs:
   pi-gen-image:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - run: tree
       - name: Build pi-gen with test-stage
         uses: usimd/pi-gen-action@v1
         id: build
