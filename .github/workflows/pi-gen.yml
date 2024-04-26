@@ -14,10 +14,12 @@ jobs:
           {
           cat > test-stage/package-test/00-run-chroot.sh <<-EOF
           #!/bin/bash
+          MODULE_PATH=/tmp/seeed-linux-dtoverlays
           apt-get update
           apt-get -y install dialog coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc qemu-utils kpartx gpg pigz xxd kmod binfmt-support
-          git clone https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git -b master --depth=1
-          ./seeed-linux-dtoverlays/scripts/reTerminal.sh --device reComputer-R100x
+          git clone https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git -b master --depth=1 "${ROOTFS_DIR}${MODULE_PATH}"
+          cd ${MODULE_PATH}
+          ./scripts/reTerminal.sh --device reComputer-R100x
           EOF
           } &&
           chmod +x test-stage/package-test/00-run-chroot.sh &&
