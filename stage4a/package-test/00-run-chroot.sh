@@ -4,6 +4,7 @@ apt-get update
 apt-get -y install dialog coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc qemu-utils kpartx gpg pigz xxd kmod binfmt-support
 git clone https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git -b master --depth=1
 ls -l
+pwd
 cp 0001-compatible-for-pi-gen.patch seeed-linux-dtoverlays/
 cd seeed-linux-dtoverlays
 ls -l
