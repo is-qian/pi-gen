@@ -6,4 +6,4 @@ apt-get -y install dialog coreutils quilt parted qemu-user-static debootstrap ze
 git clone https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git -b master --depth=1
 cd seeed-linux-dtoverlays
 ls -l
-./scripts/reTerminal.sh --device reComputer-R100x
+./scripts/reTerminal.sh --device reComputer-R100x --keep-kernel 
