@@ -25,7 +25,7 @@ jobs:
           fi
           EOF
           chmod +x stage4a/prerun.sh
-          chmod +x stage4a/00-seeed-dtoverlays/00-run.sh
+          chmod +x stage4a/00-seeed-dtoverlays/*.sh
 
       
       - name: Getting parameter configuration
