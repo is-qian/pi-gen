@@ -38,11 +38,11 @@ jobs:
         id: build
         with:
           image-name: 'reComputer-R100x-arm64'
-          compression: none
+          compression: xz
           enable-ssh: 1
           wpa-country: CN
           keyboard-keymap: us
-          stage-list: clean-stage stage0 stage1 stage2 stage3 stage4 #stage4a
+          stage-list: clean-stage stage0 stage1 stage2 stage3 stage4 stage4a
           verbose-output: true
           pi-gen-dir: pi-gen
 
