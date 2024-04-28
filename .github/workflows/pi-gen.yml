@@ -32,7 +32,6 @@ jobs:
           wpa-country: CN
           keyboard-keymap: us
           stage-list: stage0 stage1 stage2 stage3 stage4 stage4a
-          verbose-output: true
 
       - name: Upload pi-gen image
         uses: actions/upload-artifact@v3
