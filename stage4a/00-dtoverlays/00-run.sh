@@ -1,8 +1,8 @@
 #!/bin/bash -e
 set -x
 
-log "git: ${GIT_MODULE}"
-log "dev: ${SEEED_DEV_NAME}"
+SEEED_DEV_NAME=reComputer-R100x
+GIT_MODULE='https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git -b master --depth=1'
 
 if [ "X$GIT_MODULE" != "X" ]; then
 	MODULE_PATH=/tmp/seeed-linux-dtoverlays
