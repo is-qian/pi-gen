@@ -10,7 +10,7 @@ if [ "X$GIT_MODULE" != "X" ]; then
 	# ${PROXYCHAINS} wget http://192.168.1.77/reTerminalDM/dt-blob-disp1-cam2.bin -O "${ROOTFS_DIR}/boot/dt-blob.bin"
 
 	on_chroot << EOF
-ls -l
+ls -l /tmp
 pwd
 cd ${MODULE_PATH}
 dpkg -l | grep kernel
