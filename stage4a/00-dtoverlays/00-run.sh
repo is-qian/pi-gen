@@ -19,7 +19,7 @@ EOF
 	rm -rfv "${ROOTFS_DIR}${MODULE_PATH}"
 fi
 
-cat ${WORK_DIR}/config
+# cat ${WORK_DIR}/config
 
 if [ -f "purges" ]; then
 	log "Begin ${SUB_STAGE_DIR}/purges"
