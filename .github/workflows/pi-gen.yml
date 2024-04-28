@@ -9,18 +9,22 @@ jobs:
   pi-gen-image:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: before Build
-        uses: actions/checkout@v2
         run: |
           apt-get update
           apt-get -y install dialog coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools \
             libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc qemu-utils kpartx gpg pigz xxd kmod binfmt-support
+      - name: Add prerun.sh
+        run: |
+          {
           cat > stage4a/prerun.sh <<-EOF
           #!/bin/bash -e
           if [ ! -d "\${ROOTFS_DIR}" ]; then
             copy_previous
           fi
           EOF
+          } &&
           chmod +x stage4a/prerun.sh
       - name: Build pi-gen with stage4a
         uses: usimd/pi-gen-action@v1
