@@ -18,23 +18,6 @@ EOF
 	rm -rfv "${ROOTFS_DIR}${MODULE_PATH}"
 fi
 
-if [ -f "packages" ]; then
-	log "Begin ${SUB_STAGE_DIR}/packages"
-	PACKAGES="$(sed -f "${SCRIPT_DIR}/remove-comments.sed" < "packages")"
-	if [ -n "$PACKAGES" ]; then
-		on_chroot << EOF
-set -x
-apt-get -o APT::Acquire::Retries=3 install -y $PACKAGES
-EOF
-		if [ "${USE_QCOW2}" = "1" ]; then
-			on_chroot << EOF
-apt-get clean
-EOF
-		fi
-	fi
-	log "End ${SUB_STAGE_DIR}/packages"
-fi
-
 if [ -f "purges" ]; then
 	log "Begin ${SUB_STAGE_DIR}/purges"
 	PACKAGES="$(sed -f "${SCRIPT_DIR}/remove-comments.sed" < "purges")"
