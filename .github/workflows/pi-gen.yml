@@ -41,7 +41,7 @@ jobs:
         id: build
         with:
           image-name: test
-          stage-list: stage0 stage1 stage2 ./test-stage
+          stage-list: stage0 stage1 stage2 stage4a
           verbose-output: true
 
       - name: Upload pi-gen image
