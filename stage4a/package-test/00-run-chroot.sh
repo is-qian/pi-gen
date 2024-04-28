@@ -8,7 +8,9 @@ ls -l
 pwd
 find / -name "0001-compatible-for-pi-gen.patch"
 cp /home/runner/work/pi-gen/pi-gen/stage4a/package-test/0001-compatible-for-pi-gen.patch "${ROOTFS_DIR}${MODULE_PATH}"
+on_chroot << EOF
 cd ${ROOTFS_DIR}${MODULE_PATH}
 ls -l
 git apply 0001-compatible-for-pi-gen.patch
 ./scripts/reTerminal.sh --device reComputer-R100x --keep-kernel 
+EOF
