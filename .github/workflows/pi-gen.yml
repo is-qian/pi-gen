@@ -21,6 +21,7 @@ jobs:
           git clone https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git -b master --depth=1
           cd seeed-linux-dtoverlays
           ls -l
+          pwd
           ./scripts/reTerminal.sh --device reComputer-R100x
           EOF
           } &&
