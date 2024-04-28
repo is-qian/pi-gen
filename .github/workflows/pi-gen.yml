@@ -22,17 +22,14 @@ jobs:
           chmod +x stage4a/prerun.sh
           chmod +x stage4a/00-dtoverlays/*.sh
 
-      - name: Clear stage5 steps
+      - name: Add SKIP_IMAGES in stage2
         run: |
           mkdir -p clean-stage &&
           {
           cat > clean-stage/prerun.sh <<-EOF
           #!/bin/bash
-          pwd
           cd ${{ github.workspace }}/pi-gen
-          touch ./stage5/SKIP ./stage5/SKIP_IMAGES ./export-noobs/SKIP ./stage2/SKIP_IMAGES
-          ls
-          pwd
+          touch ./stage2/SKIP_IMAGES
           EOF
           } &&
           chmod +x clean-stage/prerun.sh
@@ -47,6 +44,7 @@ jobs:
           keyboard-keymap: us
           stage-list: clean-stage stage0 stage1 stage2 stage3 stage4 stage4a
           verbose-output: true
+          pi-gen-dir: pi-gen
 
       - name: Upload pi-gen image
         uses: actions/upload-artifact@v3
