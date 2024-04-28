@@ -5,7 +5,7 @@ SEEED_DEV_NAME=reComputer-R100x
 GIT_MODULE='https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git -b master --depth=1'
 
 if [ "X$GIT_MODULE" != "X" ]; then
-	MODULE_PATH=/tmp/seeed-linux-dtoverlays
+	MODULE_PATH=/seeed-linux-dtoverlays
 	${PROXYCHAINS} git clone ${GIT_MODULE} "${ROOTFS_DIR}${MODULE_PATH}"
 	ls ${ROOTFS_DIR}${MODULE_PATH}
 	# ${PROXYCHAINS} wget http://192.168.1.77/reTerminalDM/dt-blob-disp1-cam2.bin -O "${ROOTFS_DIR}/boot/dt-blob.bin"
