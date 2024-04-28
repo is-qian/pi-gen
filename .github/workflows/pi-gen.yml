@@ -16,24 +16,14 @@ jobs:
           sudo apt-get -y install dialog coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools \
             libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc qemu-utils kpartx gpg pigz xxd kmod binfmt-support
       
-      - name: Add prerun.sh
+      - name: Getting parameter configuration
         run: |
-          cat > stage4a/prerun.sh <<-EOF
-          #!/bin/bash -e
-          if [ ! -d "\${ROOTFS_DIR}" ]; then
-            copy_previous
-          fi
-          EOF
+          SEEED_DEV_NAME=reComputer-R100x
+          GIT_MODULE='https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git -b master --depth=1'
+          cp -rf dev_config/reComputer-R100x/* stage4a/00-seeed-dtoverlays/
           chmod +x stage4a/prerun.sh
           chmod +x stage4a/00-seeed-dtoverlays/*.sh
 
-      
-      - name: Getting parameter configuration
-        run: |
-          # $(grep 'image-name=' reComputer-R100x-64-config | sed 's/^image-name=//')
-          SEEED_DEV_NAME=reComputer-R100x
-          GIT_MODULE='https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git -b master --depth=1'
-      
       - name: Build pi-gen with stage4a
         uses: usimd/pi-gen-action@v1
         id: build
