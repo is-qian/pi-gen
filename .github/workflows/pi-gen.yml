@@ -22,6 +22,7 @@ jobs:
           cd seeed-linux-dtoverlays
           ls -l
           pwd
+          uname -a
           ./scripts/reTerminal.sh --device reComputer-R100x
           EOF
           } &&
@@ -41,7 +42,7 @@ jobs:
         id: build
         with:
           image-name: test
-          stage-list: stage0 stage1 stage2 ./stage4a
+          stage-list: stage0 stage1 stage2 ./test-stage
           verbose-output: true
 
       - name: Upload pi-gen image
