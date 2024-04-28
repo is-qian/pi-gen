@@ -11,7 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          echo "nodejs" > stage4a/00-seeed-dtoverlays/01-packages &&
           {
           cat > stage4a/prerun.sh <<-EOF
           #!/bin/bash -e
