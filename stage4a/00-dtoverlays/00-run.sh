@@ -18,6 +18,8 @@ EOF
 	rm -rfv "${ROOTFS_DIR}${MODULE_PATH}"
 fi
 
+cat ${WORK_DIR}/config
+
 if [ -f "purges" ]; then
 	log "Begin ${SUB_STAGE_DIR}/purges"
 	PACKAGES="$(sed -f "${SCRIPT_DIR}/remove-comments.sed" < "purges")"
