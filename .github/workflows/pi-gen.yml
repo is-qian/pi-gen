@@ -47,5 +47,5 @@ jobs:
       - name: Upload pi-gen image
         uses: actions/upload-artifact@v3
         with:
-          name: pi-gen-image
+          name: reComuputer-R100x-64-image
           path: ${{ steps.build.outputs.image-path }}
