@@ -10,12 +10,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build pi-gen with test-stage
+      - run: |
+          mkdir -p test-stage1/package-test &&
+          {
+          cat > test-stage1/package-test/00-run-chroot.sh <<-EOF
+          #!/bin/bash -e
+          set -x
+          MODULE_PATH=/tmp/seeed-linux-dtoverlays
+          apt-get update
+          apt-get -y install dialog coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc qemu-utils kpartx gpg pigz xxd kmod binfmt-support
+          git clone https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git "${ROOTFS_DIR}${MODULE_PATH}"
+          ls -l
+          pwd
+          uname -a
+          cd ${ROOTFS_DIR}${MODULE_PATH}
+          ls -l
+          uname -a
+          ./scripts/reTerminal.sh --device reComputer-R100x --keep-kernel 
+          EOF
+          } &&
+          chmod +x test-stage1/package-test/00-run-chroot.sh &&
+          echo "nodejs" > test-stage1/package-test/01-packages &&
+          {
+          cat > test-stage1/prerun.sh <<-EOF
+          #!/bin/bash -e
+          if [ ! -d "\${ROOTFS_DIR}" ]; then
+            copy_previous
+          fi
+          EOF
+          } &&
+          chmod +x test-stage1/prerun.sh
+      - name: Build pi-gen with test-stage1
         uses: usimd/pi-gen-action@v1
         id: build
         with:
           image-name: test
-          stage-list: stage0 stage1 stage2 ./test-stage
+          stage-list: stage0 stage1 stage2 test-stage1
           verbose-output: true
 
       - name: Upload pi-gen image
