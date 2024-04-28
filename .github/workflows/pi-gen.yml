@@ -47,6 +47,7 @@ jobs:
           keyboard-keymap: us
           stage-list: clean-stage stage0 stage1 stage2 stage3 stage4 stage4a
           verbose-output: true
+          pi-gen-dir: ${{ inputs.custom-pi-gen-dir }}
 
       - name: Upload pi-gen image
         uses: actions/upload-artifact@v3
