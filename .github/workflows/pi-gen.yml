@@ -20,7 +20,7 @@ jobs:
         run: |
           SEEED_DEV_NAME=reComputer-R100x
           GIT_MODULE='https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git -b master --depth=1'
-          cp -rf dev_config/reComputer-R100x/* stage4a/00-seeed-dtoverlays/
+          cp -rf dev_config/reComputer-R100x/* stage4a/00-dtoverlays/
           chmod +x stage4a/prerun.sh
           chmod +x stage4a/00-seeed-dtoverlays/*.sh
 
