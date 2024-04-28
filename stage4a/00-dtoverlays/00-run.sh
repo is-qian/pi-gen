@@ -12,6 +12,7 @@ if [ "X$GIT_MODULE" != "X" ]; then
 
 	on_chroot << EOF
 ls -l /tmp
+ls -l /
 find / -name "reTerminal.sh"
 pwd
 cd ${MODULE_PATH}
