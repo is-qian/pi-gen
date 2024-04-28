@@ -1,8 +1,0 @@
-IMG_NAME='Raspbian-reComputer-R100x-arm64'
-APT_PROXY=http://192.168.1.77:3142
-DEPLOY_COMPRESSION=none
-GIT_MODULE='http://192.168.1.77:1080/awesome-se/seeed-linux-dtoverlays.git -b master --depth=1'
-ENABLE_SSH=1
-WPA_COUNTRY=CN
-KEYBOARD_KEYMAP=us
-SEEED_DEV_NAME=reComputer-R100x

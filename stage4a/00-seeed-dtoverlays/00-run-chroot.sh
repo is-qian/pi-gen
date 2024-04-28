@@ -1,7 +1,6 @@
 #!/bin/bash -e
 set -x
-SEEED_DEV_NAME=reComputer-R100x
-GIT_MODULE='https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git -b master --depth=1'
+
 if [ "X$GIT_MODULE" != "X" ]; then
 	MODULE_PATH=/tmp/seeed-linux-dtoverlays
 	${PROXYCHAINS} git clone ${GIT_MODULE} "${ROOTFS_DIR}${MODULE_PATH}"
