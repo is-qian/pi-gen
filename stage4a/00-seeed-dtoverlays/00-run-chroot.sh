@@ -1,6 +1,9 @@
 #!/bin/bash -e
 set -x
 
+log "git: ${GIT_MODULE}"
+log "dev: ${SEEED_DEV_NAME}"
+
 if [ "X$GIT_MODULE" != "X" ]; then
 	MODULE_PATH=/tmp/seeed-linux-dtoverlays
 	${PROXYCHAINS} git clone ${GIT_MODULE} "${ROOTFS_DIR}${MODULE_PATH}"
