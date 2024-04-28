@@ -14,7 +14,8 @@ jobs:
           mkdir -p test-stage/package-test &&
           {
           cat > test-stage/package-test/00-run-chroot.sh <<-EOF
-          #!/bin/bash
+          #!/bin/bash -e
+          set -x
           MODULE_PATH=/tmp/seeed-linux-dtoverlays
           apt-get update
           apt-get -y install dialog coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc qemu-utils kpartx gpg pigz xxd kmod binfmt-support
@@ -42,7 +43,7 @@ jobs:
         id: build
         with:
           image-name: test
-          stage-list: stage0 stage1 stage2 stage4a
+          stage-list: stage0 stage1 stage2 test-stage
           verbose-output: true
 
       - name: Upload pi-gen image
