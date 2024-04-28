@@ -28,6 +28,7 @@ jobs:
           {
           cat > clean-stage/prerun.sh <<-EOF
           #!/bin/bash
+          pwd
           cd ${{ github.workspace }}/${{ inputs.custom-pi-gen-dir }}
           touch ./stage5/SKIP ./stage5/SKIP_IMAGES ./export-noobs/SKIP ./stage2/SKIP_IMAGES
           ls
