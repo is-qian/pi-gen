@@ -63,7 +63,7 @@ on:
           - false
 
 jobs:
-  reComputer-R100x-64-image:
+  reComputer-R100x-image:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
