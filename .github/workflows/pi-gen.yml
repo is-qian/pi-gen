@@ -7,7 +7,7 @@ on:
   
 jobs:
   reComuputer-R100x-64-image:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: before Build
@@ -23,13 +23,13 @@ jobs:
           mysql-server mssql-tools unixodbc-dev yarn bazel chrpath libssl-dev libxft-dev \
           libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev \
           php-zmq snmp pollinate libpq-dev postgresql-client ruby-full \
+          azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell \
           sphinxsearch subversion mongodb-org -yq >/dev/null 2>&1 \
           || echo "failed main apt-get remove"
           echo "Removing large packages"
           sudo apt-get remove -y '^dotnet-.*'
           sudo apt-get remove -y '^llvm-.*'
           sudo apt-get remove -y 'php.*'
-          sudo apt-get remove azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell -y >/dev/null 2>&1
           sudo apt-get autoremove -y >/dev/null 2>&1
           sudo apt-get clean
           sudo apt-get autoremove -y >/dev/null 2>&1
