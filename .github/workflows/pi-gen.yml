@@ -114,6 +114,14 @@ jobs:
           sudo -E apt-get -qq clean
           df -h
 
+      - name: Getting parameter configuration
+        run: |
+          if [ -d "dev_config/${{ inputs.dev_name }}" ]; then
+            cp -rf dev_config/${{ inputs.dev_name }}/* stage4a/00-dtoverlays/
+          fi
+          chmod +x stage4a/prerun.sh
+          chmod +x stage4a/00-dtoverlays/*.sh
+
       - name: Build ${{ inputs.dev_name }} with stagelists
         uses: usimd/pi-gen-action@v1
         id: build
