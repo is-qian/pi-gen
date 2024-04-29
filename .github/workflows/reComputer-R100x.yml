@@ -129,5 +129,5 @@ jobs:
       - name: Upload reComuputer-R100x image
         uses: actions/upload-artifact@v3
         with:
-          name: reComputer-R100x-${{ inputs.pi-gen-version }}-image
+          name: Raspbian-reComputer-R100x-${{ inputs.pi-gen-version }}
           path: ${{ steps.build.outputs.image-path }}

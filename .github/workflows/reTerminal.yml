@@ -129,5 +129,5 @@ jobs:
       - name: Upload reTerminal image
         uses: actions/upload-artifact@v3
         with:
-          name: reTerminal-${{ inputs.pi-gen-version }}-image
+          name: Raspbian-reTerminal-${{ inputs.pi-gen-version }}
           path: ${{ steps.build.outputs.image-path }}

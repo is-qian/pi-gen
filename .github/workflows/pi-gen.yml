@@ -110,6 +110,7 @@ jobs:
         id: build
         with:
           image-name: 'pi-gen-${{ inputs.pi-gen-version }}'
+          pi-gen-version: ${{ inputs.pi-gen-version }}
           compression: ${{ inputs.compression }}
           enable-ssh: ${{ inputs.enable-ssh }}
           wpa-country: ${{ inputs.wpa-country }}
@@ -122,5 +123,5 @@ jobs:
       - name: Upload pi-gen image
         uses: actions/upload-artifact@v3
         with:
-          name: pi-gen-image
+          name: Raspbian-${{ inputs.pi-gen-version }}
           path: ${{ steps.build.outputs.image-path }}
