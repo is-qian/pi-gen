@@ -1,7 +1,7 @@
 #!/bin/bash -e
 set -x
 
-if ${IMG_NAME} == "pi" ; then
+if ${IMG_NAME} = "pi" ; then
 	exit 0
 fi
 
@@ -72,12 +72,4 @@ systemctl daemon-reload
 systemctl enable seeed_dsifix.service
 EOF
 	log "End copy files special for seeed"
-fi
-
-if [ "${COPY_DOCKER_IMG}" = "1" ]; then
-	if [ -d $BASE_DIR/docker_images ]; then
-		cp -r $BASE_DIR/docker_images "${ROOTFS_DIR}/var/"
-	else
-		log "docker image files not exist,check your CI code!"
-	fi
 fi
