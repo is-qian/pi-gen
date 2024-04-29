@@ -7,7 +7,7 @@ GIT_MODULE='https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git -b master
 
 ls -l
 #如果存在files文件夹，则执行
-if [ -f "files"]; then
+if [ -f "files" ]; then
 	log "Begin copy files special for seeed"
 	chmod +x ./files/dsi_fix.sh
 	cp ./files/dsi_fix.sh ${ROOTFS_DIR}/var/
