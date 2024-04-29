@@ -1,10 +1,13 @@
 name: Build and upload image
+
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-  
+  workflow_dispatch:
+    inputs:
+      pi-gen-dir:
+        description: 'Path to the pi-gen directory'
+        required: true
+        default: 'pi-gen'
+
 jobs:
   reComuputer-R100x-64-image:
     runs-on: ubuntu-latest
@@ -64,7 +67,7 @@ jobs:
           wpa-country: CN
           keyboard-keymap: us
           stage-list: stage0 stage1 stage2 stage3 stage4 stage4a
-          pi-gen-dir: pi-gen
+          pi-gen-dir: ${{ inputs.pi-gen-dir }}
           export-last-stage-only: true
 
       - name: Upload pi-gen image
