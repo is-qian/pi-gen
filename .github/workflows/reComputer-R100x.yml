@@ -115,7 +115,8 @@ jobs:
         uses: usimd/pi-gen-action@v1
         id: build
         with:
-          image-name: 'reComputer-R100x-${{ inputs.pi-gen-version }}'
+          image-name: 'reComputer-R100x'
+          pi-gen-version: ${{ inputs.pi-gen-version }}
           compression: ${{ inputs.compression }}
           enable-ssh: ${{ inputs.enable-ssh }}
           wpa-country: ${{ inputs.wpa-country }}

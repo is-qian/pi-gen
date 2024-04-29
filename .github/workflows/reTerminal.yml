@@ -115,7 +115,8 @@ jobs:
         uses: usimd/pi-gen-action@v1
         id: build
         with:
-          image-name: 'reTerminal-${{ inputs.pi-gen-version }}'
+          image-name: 'reTerminal'
+          pi-gen-version: ${{ inputs.pi-gen-version }}
           compression: ${{ inputs.compression }}
           enable-ssh: ${{ inputs.enable-ssh }}
           wpa-country: ${{ inputs.wpa-country }}

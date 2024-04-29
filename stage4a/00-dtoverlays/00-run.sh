@@ -1,7 +1,8 @@
 #!/bin/bash -e
 set -x
 
-SEEED_DEV_NAME=reComputer-R100x
+SEEED_DEV_NAME=${image-name}
+echo "Seeed device name: ${SEEED_DEV_NAME}"
 GIT_MODULE='https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git -b master --depth=1'
 
 if [ "X$GIT_MODULE" != "X" ]; then
