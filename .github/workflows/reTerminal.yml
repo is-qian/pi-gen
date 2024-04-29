@@ -1,4 +1,4 @@
-name: Build reComputer-R100x image
+name: Build reTerminal image
 
 on:
   workflow_dispatch:
@@ -63,7 +63,7 @@ on:
           - false
 
 jobs:
-  reComputer-R100x-64-image:
+  reTerminal-image:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -107,7 +107,7 @@ jobs:
 
       - name: Getting parameter configuration
         run: |
-          cp -rf dev_config/reComputer-R100x/* stage4a/00-dtoverlays/
+          cp -rf dev_config/reTerminal/* stage4a/00-dtoverlays/
           chmod +x stage4a/prerun.sh
           chmod +x stage4a/00-dtoverlays/*.sh
 
@@ -115,7 +115,7 @@ jobs:
         uses: usimd/pi-gen-action@v1
         id: build
         with:
-          image-name: 'reComputer-R100x-${{ inputs.pi-gen-version }}'
+          image-name: 'reTerminal-${{ inputs.pi-gen-version }}'
           compression: ${{ inputs.compression }}
           enable-ssh: ${{ inputs.enable-ssh }}
           wpa-country: ${{ inputs.wpa-country }}
@@ -128,5 +128,5 @@ jobs:
       - name: Upload pi-gen image
         uses: actions/upload-artifact@v3
         with:
-          name: reComuputer-R100x-64-image
+          name: reTerminal-image
           path: ${{ steps.build.outputs.image-path }}
