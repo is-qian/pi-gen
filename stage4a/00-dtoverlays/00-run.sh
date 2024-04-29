@@ -2,7 +2,6 @@
 set -x
 
 SEEED_DEV_NAME=${IMG_NAME}
-echo "Seeed device name: ${SEEED_DEV_NAME}"
 GIT_MODULE='https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git -b master --depth=1'
 
 if [ "X$GIT_MODULE" != "X" ]; then
@@ -59,7 +58,7 @@ EOF
 fi
 
 
-if [ "${COPY_FILES}" = "1" ]; then
+if [ -f "files"]; then
 	log "Begin copy files special for seeed"
 	chmod +x ./files/dsi_fix.sh
 	cp ./files/dsi_fix.sh ${ROOTFS_DIR}/var/
