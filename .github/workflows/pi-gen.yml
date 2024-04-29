@@ -3,6 +3,15 @@ name: Build pi-gen image
 on:
   workflow_dispatch:
     inputs:
+      dev_name:
+        description: 'Name of device'
+        required: true
+        default: 'pi'
+        type: choice
+        options:
+          - pi
+          - reComputer-R100x
+          - reTerminal
       pi-gen-version:
         description: 'This can both be a branch or tag name known in the pi-gen repository.'
         required: true
@@ -105,11 +114,11 @@ jobs:
           sudo -E apt-get -qq clean
           df -h
 
-      - name: Build pi-gen with stagelists
+      - name: Build ${{ inputs.dev_name }} with stagelists
         uses: usimd/pi-gen-action@v1
         id: build
         with:
-          image-name: 'pi-gen-${{ inputs.pi-gen-version }}'
+          image-name: ${{ inputs.dev_name }}
           pi-gen-version: ${{ inputs.pi-gen-version }}
           compression: ${{ inputs.compression }}
           enable-ssh: ${{ inputs.enable-ssh }}
@@ -120,8 +129,8 @@ jobs:
           export-last-stage-only: ${{ inputs.export-last-stage-only }}
           verbose-output: ${{ inputs.verbose-output }}
 
-      - name: Upload pi-gen image
+      - name: Upload ${{ inputs.dev_name }} image
         uses: actions/upload-artifact@v3
         with:
-          name: Raspbian-${{ inputs.pi-gen-version }}
+          name: Raspbian-${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}
           path: ${{ steps.build.outputs.image-path }}

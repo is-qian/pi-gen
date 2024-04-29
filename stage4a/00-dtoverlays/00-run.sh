@@ -1,6 +1,9 @@
 #!/bin/bash -e
 set -x
 
+if ${IMG_NAME} == "pi" ; then
+	exit 0
+
 SEEED_DEV_NAME=${IMG_NAME}
 GIT_MODULE='https://github.com/Seeed-Studio/seeed-linux-dtoverlays.git -b master --depth=1'
 
