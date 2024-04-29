@@ -59,7 +59,7 @@ jobs:
         id: build
         with:
           image-name: 'reComputer-R100x-arm64'
-          compression: xz
+          compression: none
           enable-ssh: 1
           wpa-country: CN
           keyboard-keymap: us
@@ -67,11 +67,8 @@ jobs:
           pi-gen-dir: pi-gen
           export-last-stage-only: true
 
-      - name: Upload to GitHub Releases
-        uses: softprops/action-gh-release@v1
+      - name: Upload pi-gen image
+        uses: actions/upload-artifact@v3
         with:
-          files: |
-            ${{ steps.build.outputs.image-path }}
-          tag_name: continuous
-          target_commitish: ${{ github.sha }}
-          draft: false
+          name: reComuputer-R100x-64-image
+          path: ${{ steps.build.outputs.image-path }}
