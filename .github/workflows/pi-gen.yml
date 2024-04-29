@@ -1,4 +1,4 @@
-name: Build reComputer-R100x image
+name: Build pi-gen image
 
 on:
   workflow_dispatch:
@@ -19,7 +19,7 @@ on:
       stage-list:
         description: 'List of stage name to execute in given order.'
         required: true
-        default: 'stage0 stage1 stage2 stage3 stage4 stage4a'
+        default: 'stage0 stage1 stage2 stage3 stage4'
         type: string
       wpa-country:
         description: 'Set the country code for WPA'
@@ -63,7 +63,7 @@ on:
           - false
 
 jobs:
-  reComputer-R100x-64-image:
+  pi-gen-image:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -105,17 +105,11 @@ jobs:
           sudo -E apt-get -qq clean
           df -h
 
-      - name: Getting parameter configuration
-        run: |
-          cp -rf dev_config/reComputer-R100x/* stage4a/00-dtoverlays/
-          chmod +x stage4a/prerun.sh
-          chmod +x stage4a/00-dtoverlays/*.sh
-
       - name: Build pi-gen with stagelists
         uses: usimd/pi-gen-action@v1
         id: build
         with:
-          image-name: 'reComputer-R100x-${{ inputs.pi-gen-version }}'
+          image-name: 'pi-gen-${{ inputs.pi-gen-version }}'
           compression: ${{ inputs.compression }}
           enable-ssh: ${{ inputs.enable-ssh }}
           wpa-country: ${{ inputs.wpa-country }}
@@ -125,8 +119,8 @@ jobs:
           export-last-stage-only: ${{ inputs.export-last-stage-only }}
           verbose-output: ${{ inputs.verbose-output }}
 
-      - name: Upload reComuputer-R100x image
+      - name: Upload pi-gen image
         uses: actions/upload-artifact@v3
         with:
-          name: reComputer-R100x-${{ inputs.pi-gen-version }}-image
+          name: pi-gen-image
           path: ${{ steps.build.outputs.image-path }}

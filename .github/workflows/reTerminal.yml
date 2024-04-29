@@ -111,7 +111,7 @@ jobs:
           chmod +x stage4a/prerun.sh
           chmod +x stage4a/00-dtoverlays/*.sh
 
-      - name: Build pi-gen with stage4a
+      - name: Build pi-gen with stagelists
         uses: usimd/pi-gen-action@v1
         id: build
         with:
@@ -125,8 +125,8 @@ jobs:
           export-last-stage-only: ${{ inputs.export-last-stage-only }}
           verbose-output: ${{ inputs.verbose-output }}
 
-      - name: Upload pi-gen image
+      - name: Upload reTerminal image
         uses: actions/upload-artifact@v3
         with:
-          name: reTerminal-image
+          name: reTerminal-${{ inputs.pi-gen-version }}-image
           path: ${{ steps.build.outputs.image-path }}
