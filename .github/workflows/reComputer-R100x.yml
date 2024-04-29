@@ -66,7 +66,7 @@ jobs:
   reComputer-R100x-image:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: before Build
         run: |
           sudo apt-get remove aria2 ansible shellcheck rpm xorriso zsync \
@@ -127,7 +127,7 @@ jobs:
           verbose-output: ${{ inputs.verbose-output }}
 
       - name: Upload reComuputer-R100x image
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Raspbian-reComputer-R100x-${{ inputs.pi-gen-version }}
           path: ${{ steps.build.outputs.image-path }}
