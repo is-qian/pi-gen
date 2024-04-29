@@ -46,7 +46,8 @@ jobs:
           sudo -E apt-get -y install git
           sudo -E apt-get -qq autoremove --purge
           sudo -E apt-get -qq clean
-
+          df -h
+          
       - name: Getting parameter configuration
         run: |
           cp -rf dev_config/reComputer-R100x/* stage4a/00-dtoverlays/
