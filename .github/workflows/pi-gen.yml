@@ -70,6 +70,16 @@ on:
         options:
           - true
           - false
+      username:
+        description: 'Username for the image'
+        required: true
+        default: 'pi'
+        type: string
+      password:
+        description: 'Password for the image'
+        required: true
+        default: 'raspberry'
+        type: string
 
 jobs:
   pi-gen-image:
@@ -136,8 +146,8 @@ jobs:
           pi-gen-dir: ${{ inputs.pi-gen-dir }}
           export-last-stage-only: ${{ inputs.export-last-stage-only }}
           verbose-output: ${{ inputs.verbose-output }}
-          username: pi
-          password: 'raspberry'
+          username: ${{ inputs.username }}
+          password: ${{ inputs.password }}
 
       - name: Upload ${{ inputs.dev_name }} image
         uses: actions/upload-artifact@v4
