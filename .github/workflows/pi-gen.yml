@@ -72,7 +72,7 @@ on:
           - false
 
 jobs:
-  ${{ inputs.dev_name }}-image:
+  pi-gen-image:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -136,6 +136,8 @@ jobs:
           pi-gen-dir: ${{ inputs.pi-gen-dir }}
           export-last-stage-only: ${{ inputs.export-last-stage-only }}
           verbose-output: ${{ inputs.verbose-output }}
+          username: pi
+          password: 'raspberry'
 
       - name: Upload ${{ inputs.dev_name }} image
         uses: actions/upload-artifact@v4
