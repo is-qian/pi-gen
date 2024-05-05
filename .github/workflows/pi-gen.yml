@@ -72,6 +72,7 @@ on:
 env:
   EXPORT_LAST_STAGE_ONLY: true
   PI_GEN_DIR: 'pi-gen'
+  
 jobs:
   pi-gen-image:
     runs-on: ubuntu-latest
@@ -137,8 +138,8 @@ jobs:
           pi-gen-dir: ${{ env.PI_GEN_DIR }}
           export-last-stage-only: ${{ env.EXPORT_LAST_STAGE_ONLY }}
           verbose-output: ${{ inputs.verbose-output }}
-          username: ${{ inputs.username }}
-          password: ${{ inputs.password }}
+          username: 'reComputer'
+          password: '12345678'
 
       - name: Upload ${{ inputs.dev_name }} image
         uses: actions/upload-artifact@v4
