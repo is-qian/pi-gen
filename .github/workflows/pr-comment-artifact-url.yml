@@ -5,7 +5,7 @@ on:
     types:
       - "completed"
     workflows:
-      - "Artifact Upload"
+      - "Build pi-gen image"
 
 jobs:
   comment-on-pr:
