@@ -68,6 +68,7 @@ if [ -d "files" ]; then
 		mkdir -p ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.config
 		cp ./files/wayfire.ini ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.config
 		cp ./files/monitors.xml ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.config
+		cp ./files/wayfire.ini ${ROOTFS_DIR}/home/${FIRST_USER_NAME}
 	fi
 	chmod +x ./files/dsi_fix.sh
 	cp ./files/dsi_fix.sh ${ROOTFS_DIR}/var/
