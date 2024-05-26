@@ -153,7 +153,7 @@ jobs:
       - name: update README.md
         run: | 
          echo "## ${{ steps.build.outputs.image-path }} image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}" 
-         python3 update_readme.py ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ inputs.username }} ${{ inputs.password }} ${{ inputs.enable-ssh }} ${{ inputs.stage-list }} ${{ steps.build.outputs.image-path }}
+         python3 update_readme.py ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ inputs.username }} ${{ inputs.password }} ${{ inputs.enable-ssh }} "${{ inputs.stage-list }}" ${{ steps.build.outputs.image-path }}
          
 
 
