@@ -173,7 +173,7 @@ jobs:
         
       - name: update README.md
         run: | 
-         echo "## ${{ steps.build.outputs.image-path }} image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}" 
+         echo "## image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} url: ${{ env.ARTIFACT_URL }}" 
          python3 update_readme.py ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ inputs.username }} ${{ inputs.password }} ${{ inputs.enable-ssh }} "${{ inputs.stage-list }}" ${{ env.ARTIFACT_URL }}
 
       - name: Commit files
@@ -185,10 +185,5 @@ jobs:
       
       - name : Push changes
         run: |
-         git push
-
-
-      
-
-
-
+         git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+         git push 
