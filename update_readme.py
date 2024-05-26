@@ -26,8 +26,8 @@ if __name__ == '__main__':
         if f"| {devname} " in line:
             # 更新找到的行
             updated_line = line.split('|')
-            updated_line[2] = f" {username_password.ljust(25)} "
-            updated_line[3] = f" {enable_ssh.ljust(11)} "  # 假设enable-ssh字段宽度为12，包括1个空格
+            updated_line[2] = f" {username_password.ljust(23)} "
+            updated_line[3] = f" {enable_ssh.ljust(10)} "  # 假设enable-ssh字段宽度为12，包括1个空格
             updated_line[4] = f" {stage_list.ljust(23)} "  # 假设stage-list字段宽度为24，包括1个空格
             updated_line[5] = f" [{current_date}]({http})"
             lines[i] = '|'.join(updated_line)
