@@ -37,11 +37,16 @@ jobs:
       - uses: actions/checkout@v4
       - name: add README.md
         run: |
+        
           touch README.md
-          echo "## Artifact URL" >> README.md
-          echo "### Build Info 
-            | Name      | Link
-            --------------------------------------------------------------------
+          echo "# pi-gen-expand
+
+          此工程用于自动生成适配多个设备的树莓派系统。可以在workflow中指定设备和配置，然后自动生成对应的树莓派系统。" >> README.md
+          echo "## 镜像下载
+          - raspbian: https://elinux.org/images/f/f9/Petazzoni-device-tree-dummies_0.pdf
+          - reTerminal: https://github.com/ddvk/remarkable2-framebuffer
+          - reTerminal-plus: https://github.com/ddvk/remarkable2-framebuffer
+          - reComputer-R100X: https://github.com/ddvk/remarkable2-framebuffer
               | Jar Files | ${{ env. ARTIFACT_URL }}
               " >> README.md
 

@@ -146,3 +146,15 @@ jobs:
         with:
           name: Raspbian-${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}
           path: ${{ steps.build.outputs.image-path }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        
+      - name: update README.md
+        run: | 
+         echo "## ${{ steps.build.outputs.image-path }} image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}" 
+         python3 update_readme.py ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ inputs.username }} ${{ inputs.password }} ${{ inputs.enable-ssh }} ${{ inputs.stage-list }} ${{ steps.build.outputs.image-path }}
+         
+
+
+
