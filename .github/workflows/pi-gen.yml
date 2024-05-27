@@ -141,6 +141,12 @@ jobs:
           password: ${{ inputs.password }}
           hostname: ${{ inputs.dev_name }}
 
+      - name: Upload ${{ inputs.dev_name }} image
+        uses: actions/upload-artifact@v4
+        with:
+          name: Raspbian-${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}
+          path: ${{ steps.build.outputs.image-path }}
+
       - name: 获取并打印 Artifact 下载链接
         run: |
             ARTIFACT_NAME="Raspbian-${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}"
@@ -155,6 +161,7 @@ jobs:
             # 打印 artifact 的下载链接
             echo "Artifact 下载链接: $ARTIFACT_URL"
             echo "ARTIFACT_URL=$ARTIFACT_URL" >> "$GITHUB_ENV"
+        
 
 
       
