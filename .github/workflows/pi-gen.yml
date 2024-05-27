@@ -141,15 +141,20 @@ jobs:
           password: ${{ inputs.password }}
           hostname: ${{ inputs.dev_name }}
 
-      - name: Upload ${{ inputs.dev_name }} image
-        uses: actions/upload-artifact@v4
-        with:
-          name: Raspbian-${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}
-          path: ${{ steps.build.outputs.image-path }}
-
-      - name: 获取上传链接
+      - name: 获取并打印 Artifact 下载链接
         run: |
-         echo "::set-output name=ARTIFACT_URL::${{ steps.build.outputs.image-url }}"
+            ARTIFACT_NAME="Raspbian-${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}"
+            WORKFLOW_RUN_ID=${{ github.run_id }}
+            REPO=${{ github.repository }}
+            AUTH_HEADER="Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}"
+            
+            # 调用 GitHub API 获取 artifact 的信息
+            ARTIFACT_URL=$(curl -s -H "$AUTH_HEADER" "https://api.github.com/repos/$REPO/actions/runs/$WORKFLOW_RUN_ID/artifacts" | \
+            jq --arg artifact_name "$ARTIFACT_NAME" -r '.artifacts[] | select(.name == $artifact_name) | .archive_download_url')
+            
+            # 打印 artifact 的下载链接
+            echo "Artifact 下载链接: $ARTIFACT_URL"
+            echo "ARTIFACT_URL=$ARTIFACT_URL" >> "$GITHUB_ENV"
 
 
       
@@ -158,8 +163,8 @@ jobs:
         
       - name: update README.md
         run: | 
-         echo "## image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} url: ${{ steps.build.outputs.image-url }}" 
-         python3 update_readme.py ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ inputs.username }} ${{ inputs.password }} ${{ inputs.enable-ssh }} "${{ inputs.stage-list }}"  ${{ steps.build.outputs.image-url }}
+         echo "## image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} url: ${{ env.ARTIFACT_URL }}" 
+         python3 update_readme.py ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ inputs.username }} ${{ inputs.password }} ${{ inputs.enable-ssh }} "${{ inputs.stage-list }}"  ${{ env.ARTIFACT_URL }}
 
       - name: Commit files
         run: |
