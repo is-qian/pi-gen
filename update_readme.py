@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     # 如果devname不存在，则在表格下方新增一行
     if not devname_found:
-        new_line = f"    | {devname.ljust(21)} | {username_password.ljust(25)} | {enable_ssh.ljust(11)} | {stage_list.ljust(23)} | [{current_date}]({http}) |\n"
+        new_line = f"| {devname.ljust(21)} | {username_password.ljust(25)} | {enable_ssh.ljust(11)} | {stage_list.ljust(23)} | [{current_date}]({http}) |\n"
         # 找到表格结束的位置（假设表格之后是空行或者文件结束）
         for i, line in enumerate(lines):
             if len(line.strip()) == 0 and i > 6:
