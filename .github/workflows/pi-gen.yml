@@ -142,6 +142,7 @@ jobs:
           hostname: ${{ inputs.dev_name }}
 
       - name: Upload ${{ inputs.dev_name }} image
+        id: artifact-upload-step
         uses: actions/upload-artifact@v4
         with:
           name: Raspbian-${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}
@@ -149,7 +150,6 @@ jobs:
 
       - name: get Artifact download URL
         run: |
-          echo " ${{ steps.artifact-upload-step.outputs.artifact-id }}"
           echo "ARTIFACT_URL=${{ steps.artifact-upload-step.outputs.artifact-url }}" >> $GITHUB_ENV
 
       - name: Setup Python
