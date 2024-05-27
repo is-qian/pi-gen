@@ -77,19 +77,92 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: before Build
+        run: |
+          sudo apt-get remove aria2 ansible shellcheck rpm xorriso zsync \
+          clang-6.0 lldb-6.0 lld-6.0 clang-format-6.0 clang-8 lldb-8 lld-8 clang-format-8 \
+          clang-9 lldb-9 lld-9 clangd-9 clang-format-9 \
+          esl-erlang gfortran-8 gfortran-9 \
+          cabal-install-2.0 cabal-install-2.2 \
+          cabal-install-2.4 cabal-install-3.0 cabal-install-3.2 heroku imagemagick \
+          libmagickcore-dev libmagickwand-dev libmagic-dev ant ant-optional kubectl \
+          mercurial apt-transport-https mono-complete mysql-client libmysqlclient-dev \
+          mysql-server mssql-tools unixodbc-dev yarn bazel chrpath libssl-dev libxft-dev \
+          libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev \
+          php-zmq snmp pollinate libpq-dev postgresql-client ruby-full \
+          azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell \
+          sphinxsearch subversion mongodb-org -yq >/dev/null 2>&1 \
+          || echo "failed main apt-get remove"
+          echo "Removing large packages"
+          sudo apt-get remove -y '^dotnet-.*'
+          sudo apt-get remove -y '^llvm-.*'
+          sudo apt-get remove -y 'php.*'
+          sudo apt-get autoremove -y >/dev/null 2>&1
+          sudo apt-get clean
+          sudo apt-get autoremove -y >/dev/null 2>&1
+          sudo apt-get autoclean -y >/dev/null 2>&1
+          #echo "https://github.com/actions/virtual-environments/issues/709"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          echo "remove big /usr/local"
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf /usr/local/lib/android >/dev/null 2>&1
+          sudo rm -rf /usr/share/dotnet/sdk > /dev/null 2>&1
+          sudo rm -rf /usr/share/dotnet/shared > /dev/null 2>&1
+          sudo rm -rf /usr/share/swift > /dev/null 2>&1
+          sudo -E apt-get -qq update
+          sudo -E apt-get -y install git
+          sudo -E apt-get -qq autoremove --purge
+          sudo -E apt-get -qq clean
+          df -h
+
+      - name: Getting parameter configuration
+        run: |
+          if [ -d "dev_config/${{ inputs.dev_name }}" ]; then
+            cp -rf dev_config/${{ inputs.dev_name }}/* stage4a/00-dtoverlays/
+          fi
+          chmod +x stage4a/prerun.sh
+          chmod +x stage4a/00-dtoverlays/*.sh
+
+      - name: Build ${{ inputs.dev_name }} with stagelists
+        uses: usimd/pi-gen-action@v1
+        id: build
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          image-name: ${{ inputs.dev_name }}
+          pi-gen-version: ${{ inputs.pi-gen-version }}
+          enable-ssh: ${{ inputs.enable-ssh }}
+          disable-first-boot-user-rename: ${{ inputs.disable-first-boot-user-rename }}
+          wpa-country: ${{ inputs.wpa-country }}
+          keyboard-keymap: ${{ inputs.keyboard-keymap }}
+          stage-list: ${{ inputs.stage-list }}
+          pi-gen-dir: ${{ env.PI_GEN_DIR }}
+          export-last-stage-only: ${{ env.EXPORT_LAST_STAGE_ONLY }}
+          verbose-output: ${{ inputs.verbose-output }}
+          username: ${{ inputs.username }}
+          password: ${{ inputs.password }}
+          hostname: ${{ inputs.dev_name }}
+
+      - name: Upload ${{ inputs.dev_name }} image
+        id: artifact-upload-step
+        uses: actions/upload-artifact@v4
+        with:
+          name: Raspbian-${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}
+          path: ${{ steps.build.outputs.image-path }}
+
+      - name: get Artifact download URL
+        run: |
+          echo "ARTIFACT_URL=${{ steps.artifact-upload-step.outputs.artifact-url }}" >> $GITHUB_ENV
 
       - name: Setup Python
         uses: actions/setup-python@v2
         
       - name: update README.md
         run: | 
-         python3 update_readme.py 'raspberrypi-arm64' 'pi'  'raspberry' '1' 'stage0 stage1 stage2' 'https://github.com/is-qian/pi-gen/actions/runs/9249233565/artifacts/1539663169'
+         echo "## ${{ steps.build.outputs.image-path }} image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ env.ARTIFACT_URL }}" 
+         python3 update_readme.py ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ inputs.username }} ${{ inputs.password }} ${{ inputs.enable-ssh }} "${{ inputs.stage-list }}" ${{ env.ARTIFACT_URL }}
 
       - name: Commit and push changes
         run: |
           git config --local user.name "GitHub Action"
           git config --local user.email "action@github.com"
-          git commit -a -m 'update README.md'
+          git commit -a -m 'update ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} URL'
           git push 
