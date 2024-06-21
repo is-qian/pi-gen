@@ -162,7 +162,9 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config --local user.name "GitHub Action"
-          git config --local user.email "action@github.com"
-          git commit -a -m 'update ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} URL'
-          git push 
+          if [ "${{ inputs.verbose-output }}" == "false" ]; then
+            git config --local user.name "GitHub Action"
+            git config --local user.email "action@github.com"
+            git commit -a -m 'update ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} URL'
+            git push 
+            fi
