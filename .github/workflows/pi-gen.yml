@@ -152,12 +152,32 @@ jobs:
         run: |
           echo "ARTIFACT_URL=${{ steps.artifact-upload-step.outputs.artifact-url }}" >> $GITHUB_ENV
 
+      - name: Uploading ${{ inputs.dev_name }} image to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ steps.build.outputs.image-path }}
+          asset_name: ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "Raspbian ${{ inputs.dev_name }} image"
+          file_glob: true
+          release_name: ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}
+          prerelease: false
+          draft: false
+          allow_update: true
+          target_commitish: ${{ github.sha }}
+
+      - name: get release URL
+        run: |
+         echo "RELEASE_URL=${{ steps.release-step.outputs.upload_url }}" >> $GITHUB_ENV
+
       - name: Setup Python
         uses: actions/setup-python@v2
         
       - name: update README.md
         run: | 
-         echo "## ${{ steps.build.outputs.image-path }} image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ env.ARTIFACT_URL }}" 
+         echo "## ${{ steps.build.outputs.image-path }} image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ env.ARTIFACT_URL }} ${{ env.RELEASE_URL }}" 
          python3 update_readme.py ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ inputs.username }} ${{ inputs.password }} ${{ inputs.enable-ssh }} "${{ inputs.stage-list }}" ${{ env.ARTIFACT_URL }}
 
       - name: Commit and push changes
