@@ -152,9 +152,10 @@ jobs:
         run: |
           echo "ARTIFACT_URL=${{ steps.artifact-upload-step.outputs.artifact-url }}" >> $GITHUB_ENV
 
+      
       - name: Uploading ${{ inputs.dev_name }} image to release
-        id: release-step
         uses: svenstaro/upload-release-action@v2
+        id: release-step
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ steps.build.outputs.image-path }}
@@ -169,16 +170,17 @@ jobs:
           allow_update: true
           target_commitish: ${{ github.sha }}
 
-      - name: get release URL
+      - name: Get realease url
         run: |
          echo "RELEASE_URL=${{ steps.release-step.outputs.upload_url }}" >> $GITHUB_ENV
+         echo "RELEASE_ID=${{ steps.release-step.outputs.id }} ${{ steps.release-step.outputs.upload_url }}" 
 
       - name: Setup Python
         uses: actions/setup-python@v2
         
       - name: update README.md
         run: | 
-         echo "## ${{ steps.build.outputs.image-path }} image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ env.ARTIFACT_URL }} ${{ env.RELEASE_URL }}" 
+         echo "## ${{ steps.build.outputs.image-path }} image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ env.ARTIFACT_URL }}" 
          python3 update_readme.py ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ inputs.username }} ${{ inputs.password }} ${{ inputs.enable-ssh }} "${{ inputs.stage-list }}" ${{ env.ARTIFACT_URL }}
 
       - name: Commit and push changes
@@ -189,3 +191,4 @@ jobs:
             git commit -a -m 'update ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} URL'
             git push 
             fi
+        
