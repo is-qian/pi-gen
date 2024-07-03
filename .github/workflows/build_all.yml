@@ -15,18 +15,18 @@ jobs:
           workflow: Build pi-gen image
           token: ${{ secrets.GITHUB_TOKEN }}
           inputs: >-
-            {
-                "dev_name": "raspberrypi", 
-                "pi-gen-version": "arm64", 
-                "enable-ssh": "1", 
-                "stage-list": "stage0 stage1 stage2 stage3 stage4 stage4a", 
-                "wpa-country" : "us", 
-                "keyboard-keymap": "us", 
-                "disable-first-boot-user-rename": "0", 
-                "username": "pi", 
-                "password": "raspberry", 
-                "verbose-output": "false" 
-             }
+                {
+                    "dev_name": "raspberrypi", 
+                    "pi-gen-version": "arm64", 
+                    "enable-ssh": "1", 
+                    "stage-list": "stage0 stage1 stage2 stage3 stage4", 
+                    "wpa-country" : "us", 
+                    "keyboard-keymap": "us", 
+                    "disable-first-boot-user-rename": "0", 
+                    "username": "pi", 
+                    "password": "raspberry", 
+                    "verbose-output": "false" 
+                }
 
       - name: build reComputer-R100x image
         uses: benc-uk/workflow-dispatch@v1.1
@@ -39,13 +39,13 @@ jobs:
                     "pi-gen-version": "arm64", 
                     "enable-ssh": "1", 
                     "stage-list": "stage0 stage1 stage2 stage3 stage4 stage4a", 
-                    "wpa-country" : "us", 
+                    "wpa-country" : "CN", 
                     "keyboard-keymap": "us", 
                     "disable-first-boot-user-rename": "1", 
                     "username": "recomputer", 
                     "password": "12345678", 
                     "verbose-output": "false" 
-                 }
+                }
 
       - name: build reTerminal image
         uses: benc-uk/workflow-dispatch@v1.1
@@ -58,7 +58,7 @@ jobs:
                     "pi-gen-version": "arm64", 
                     "enable-ssh": "1", 
                     "stage-list": "stage0 stage1 stage2 stage3 stage4 stage4a", 
-                    "wpa-country" : "us", 
+                    "wpa-country" : "CN", 
                     "keyboard-keymap": "us", 
                     "disable-first-boot-user-rename": "0", 
                     "username": "pi", 
@@ -77,7 +77,7 @@ jobs:
                     "pi-gen-version": "arm64", 
                     "enable-ssh": "1", 
                     "stage-list": "stage0 stage1 stage2 stage3 stage4 stage4a", 
-                    "wpa-country" : "us", 
+                    "wpa-country" : "CN", 
                     "keyboard-keymap": "us", 
                     "disable-first-boot-user-rename": "1", 
                     "username": "pi", 
