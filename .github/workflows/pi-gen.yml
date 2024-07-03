@@ -59,14 +59,10 @@ on:
         required: true
         default: 'raspberry'
         type: string
-      verbose-output:
-        description: 'Enable verbose output'
-        required: true
-        default: 'true'
-        type: choice
-        options:
-          - true
-          - false
+      release_url:
+        description: 'Release URL'
+        default: ""
+        type: string
 
 env:
   EXPORT_LAST_STAGE_ONLY: true
@@ -123,6 +119,14 @@ jobs:
           chmod +x stage4a/prerun.sh
           chmod +x stage4a/00-dtoverlays/*.sh
 
+      - name: Determing whether to upload to release
+        run: |
+          if [ "${{ inputs.release_url }}" == "" ]; then
+            echo "UPLOAD_TO_RELEASE=true" >> $GITHUB_ENV
+          else
+            echo "UPLOAD_TO_RELEASE=false" >> $GITHUB_ENV
+          fi
+
       - name: Build ${{ inputs.dev_name }} with stagelists
         uses: usimd/pi-gen-action@v1
         id: build
@@ -136,7 +140,7 @@ jobs:
           stage-list: ${{ inputs.stage-list }}
           pi-gen-dir: ${{ env.PI_GEN_DIR }}
           export-last-stage-only: ${{ env.EXPORT_LAST_STAGE_ONLY }}
-          verbose-output: ${{ inputs.verbose-output }}
+          verbose-output: ${{ env.UPLOAD_TO_RELEASE }}
           username: ${{ inputs.username }}
           password: ${{ inputs.password }}
           hostname: ${{ inputs.dev_name }}
@@ -153,41 +157,33 @@ jobs:
           echo "ARTIFACT_URL=${{ steps.artifact-upload-step.outputs.artifact-url }}" >> $GITHUB_ENV
 
       - name: Uploading ${{ inputs.dev_name }} image to release
-        if: ${{ inputs.verbose-output }} == "false"
-        uses: svenstaro/upload-release-action@v2
         id: release-step
+        if: ${{ env.UPLOAD_TO_RELEASE }} == "false"
+        uses: actions/upload-release-asset@v1.0.2
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ steps.build.outputs.image-path }}
-          asset_name: ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}
-          tag: ${{ github.ref }}
-          overwrite: true
-          file_glob: true
-          release_name: "Raspbian image"
-          draft: false
-          allow_update: true
-          target_commitish: ${{ github.sha }}
+          upload_url: ${{ inputs.release_url }}
+          asset_path: ${{ env.ARTIFACT_URL }}
+          asset_name: Raspbian-${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}
 
       - name: Get realease url
-        if: ${{ inputs.verbose-output }} == "false"
+        if: ${{ env.UPLOAD_TO_RELEASE }} == "false"
         run: |
-         echo "RELEASE_URL=${{ steps.release-step.outputs.upload_url }}" >> $GITHUB_ENV
-         echo "RELEASE_ID=${{ steps.release-step.outputs.id }} ${{ steps.release-step.outputs.upload_url }}" 
+         echo "RELEASE_URL=${{ steps.release-step.outputs.browser_download_url }}" >> $GITHUB_ENV
 
       - name: Setup Python
         uses: actions/setup-python@v2
         
       - name: update README.md
-        if: ${{ inputs.verbose-output }} == "false"
+        if: ${{ env.UPLOAD_TO_RELEASE }} == "false"
         run: | 
          git config --local user.name "GitHub Action"
          git config --local user.email "action@github.com"
          git pull
-         echo "## ${{ steps.build.outputs.image-path }} image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ env.ARTIFACT_URL }}" 
+         echo "## ${{ steps.build.outputs.image-path }} image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ env.ARTIFACT_URL }} ${{ env.RELEASE_URL }}" 
          python3 update_readme.py ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ inputs.username }} ${{ inputs.password }} ${{ inputs.enable-ssh }} "${{ inputs.stage-list }}" ${{ env.ARTIFACT_URL }}
 
       - name: Commit and push changes
-        if: ${{ inputs.verbose-output }} == "false"
+        if: ${{ env.UPLOAD_TO_RELEASE }} == "false"
         run: |
           git config --local user.name "GitHub Action"
           git config --local user.email "action@github.com"

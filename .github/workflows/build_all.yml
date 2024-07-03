@@ -1,14 +1,22 @@
 name: Build all images
 
 on:
-  push:
-    branches:
-      - main
+  create:
+    tags:
+        - '*'
 
 jobs:
   Build-all-images:
     runs-on: ubuntu-latest
     steps:
+      - name: Creat release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+         tag_name: ${{ github.ref }}
+         draft: false
+         prerelease: true
+
       - name: build raspberrypi image
         uses: benc-uk/workflow-dispatch@v1.1
         with:
@@ -20,12 +28,12 @@ jobs:
                     "pi-gen-version": "arm64", 
                     "enable-ssh": "1", 
                     "stage-list": "stage0 stage1 stage2 stage3 stage4", 
-                    "wpa-country" : "us", 
+                    "wpa-country" : "CN", 
                     "keyboard-keymap": "us", 
                     "disable-first-boot-user-rename": "0", 
                     "username": "pi", 
                     "password": "raspberry", 
-                    "verbose-output": "false" 
+                    "release_url": ${{ steps.create_release.outputs.upload_url }}
                 }
 
       - name: build reComputer-R100x image
@@ -44,7 +52,7 @@ jobs:
                     "disable-first-boot-user-rename": "1", 
                     "username": "recomputer", 
                     "password": "12345678", 
-                    "verbose-output": "false" 
+                    "release_url": ${{ steps.create_release.outputs.upload_url }}
                 }
 
       - name: build reTerminal image
@@ -63,7 +71,7 @@ jobs:
                     "disable-first-boot-user-rename": "0", 
                     "username": "pi", 
                     "password": "raspberry", 
-                    "verbose-output": "false" 
+                    "release_url": ${{ steps.create_release.outputs.upload_url }}
                  }
     
       - name: build reTerminal-plus image
@@ -82,5 +90,6 @@ jobs:
                     "disable-first-boot-user-rename": "1", 
                     "username": "pi", 
                     "password": "raspberry", 
-                    "verbose-output": "false" 
-                 }
+                    "release_url": ${{ steps.create_release.outputs.upload_url }}
+                }
+    
