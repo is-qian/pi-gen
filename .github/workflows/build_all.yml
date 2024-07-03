@@ -12,7 +12,7 @@ jobs:
       - name: build raspberrypi image
         uses: benc-uk/workflow-dispatch@v1.1
         with:
-          workflow: .github/workflows/pi-gen.yml
+          workflow: ./pi-gen.yml
           token: ${{ secrets.GITHUB_TOKEN }}
           inputs: '{ "dev_name": "raspberrypi", "pi-gen-version": "arm64", "enable-ssh": "1", "stage-list": "stage0 stage1 stage2 stage3 stage4 stage4a", "wpa-country" : "us", "keyboard-keymap": "us", "disable-first-boot-user-rename": "0", "username": "pi", "password": "raspberry", "verbose-output": "false" }'
 
