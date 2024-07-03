@@ -160,9 +160,11 @@ jobs:
         id: release-step
         if: ${{ env.UPLOAD_TO_RELEASE }} == "false"
         uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ inputs.release_url }}
-          asset_path: ${{ env.ARTIFACT_URL }}
+          asset_path: ${{ steps.build.outputs.image-path }}
           asset_name: Raspbian-${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}
 
       - name: Get realease url
