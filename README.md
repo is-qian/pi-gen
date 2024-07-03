@@ -7,8 +7,8 @@
 | Name                  |   username & password   | enable-ssh |        stage-list       |      date      |
 |-----------------------|-------------------------|------------|-------------------------|----------------|
 | raspberrypi-arm64     | pi & raspberry          | 1          | stage0 stage1 stage2 stage3 stage4 stage4a | [2024-06-24](https://github.com/is-qian/pi-gen/actions/runs/9641251531/artifacts/1630637877)|
-| reTerminal-arm64      | pi & raspberry          | 1          | stage0 stage1 stage2 stage3 stage4 stage4a | [2024-06-24](https://github.com/is-qian/pi-gen/actions/runs/9641936603/artifacts/1630832884)|
-| reTerminal-plus-arm64 |                         |            |                         |   [DATE](NULL) |
+| reTerminal-arm64      | pi & raspberry          | 1          | stage0 stage1 stage2 stage3 stage4 stage4a | [2024-07-03](https://github.com/is-qian/pi-gen/actions/runs/9772615711/artifacts/1662620401)|
+| reTerminal-plus-arm64 | pi & raspberry          | 1          | stage0 stage1 stage2 stage3 stage4 stage4a | [2024-07-03](https://github.com/is-qian/pi-gen/actions/runs/9772615759/artifacts/1662621434)|
 | reComputer-R100X-arm64|                         |            |                         |   [DATE](NULL) |
-| reComputer-R100x-arm64 | recomputer & 12345678   | 1          | stage0 stage1 stage2 stage3 stage4 stage4a | [2024-07-03](https://github.com/is-qian/pi-gen/actions/runs/9771429955/artifacts/1662270457)|
+| reComputer-R100x-arm64 | recomputer & 12345678   | 1          | stage0 stage1 stage2 stage3 stage4 stage4a | [2024-07-03](https://github.com/is-qian/pi-gen/actions/runs/9772615640/artifacts/1662611671)|
 
