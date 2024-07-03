@@ -13,10 +13,10 @@ jobs:
         id: create_release
         uses: actions/create-release@v1.1.4
         with:
-         tag_name: ${{ github.ref#refs/tags/ }}
+         tag_name: ${{ GITHUB_REF#refs/tags/ }}
          draft: false
          prerelease: true
-         
+
         uses: benc-uk/workflow-dispatch@v1.1
         with:
           workflow: Build pi-gen image
