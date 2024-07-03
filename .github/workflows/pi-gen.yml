@@ -152,7 +152,6 @@ jobs:
         run: |
           echo "ARTIFACT_URL=${{ steps.artifact-upload-step.outputs.artifact-url }}" >> $GITHUB_ENV
 
-      
       - name: Uploading ${{ inputs.dev_name }} image to release
         if: ${{ inputs.verbose-output }} == "false"
         uses: svenstaro/upload-release-action@v2
@@ -181,6 +180,9 @@ jobs:
       - name: update README.md
         if: ${{ inputs.verbose-output }} == "false"
         run: | 
+         git config --local user.name "GitHub Action"
+         git config --local user.email "action@github.com"
+         git pull
          echo "## ${{ steps.build.outputs.image-path }} image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ env.ARTIFACT_URL }}" 
          python3 update_readme.py ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ inputs.username }} ${{ inputs.password }} ${{ inputs.enable-ssh }} "${{ inputs.stage-list }}" ${{ env.ARTIFACT_URL }}
 
