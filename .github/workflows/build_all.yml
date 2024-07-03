@@ -11,12 +11,13 @@ jobs:
     steps:
       - name: Creat release
         id: create_release
-        uses: actions/create-release@v1.1.4
+        uses: softprops/action-gh-release@v1
         with:
-         tag_name: ${{ github.ref }}
+         tag_name: ${{ GITHUB_REF#refs/tags/ }}
          draft: false
          prerelease: true
 
+      - name: build raspberrypi image
         uses: benc-uk/workflow-dispatch@v1.1
         with:
           workflow: Build pi-gen image
@@ -32,7 +33,7 @@ jobs:
                     "disable-first-boot-user-rename": "0", 
                     "username": "pi", 
                     "password": "raspberry", 
-                    "release_url": "${{ steps.create_release.outputs.
+                    "release_url": "${{ steps.create_release.outputs.upload_url }}"
                 }
 
       - name: build reComputer-R100x image
