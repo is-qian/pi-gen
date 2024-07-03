@@ -33,7 +33,7 @@ jobs:
                     "disable-first-boot-user-rename": "0", 
                     "username": "pi", 
                     "password": "raspberry", 
-                    "release_url": ${{ steps.create_release.outputs.upload_url }}
+                    "release_url": "${{ steps.create_release.outputs.upload_url }}"
                 }
 
       - name: build reComputer-R100x image
@@ -52,7 +52,7 @@ jobs:
                     "disable-first-boot-user-rename": "1", 
                     "username": "recomputer", 
                     "password": "12345678", 
-                    "release_url": ${{ steps.create_release.outputs.upload_url }}
+                    "release_url": "${{ steps.create_release.outputs.upload_url }}"
                 }
 
       - name: build reTerminal image
@@ -71,7 +71,7 @@ jobs:
                     "disable-first-boot-user-rename": "0", 
                     "username": "pi", 
                     "password": "raspberry", 
-                    "release_url": ${{ steps.create_release.outputs.upload_url }}
+                    "release_url": "${{ steps.create_release.outputs.upload_url }}"
                  }
     
       - name: build reTerminal-plus image
@@ -90,6 +90,6 @@ jobs:
                     "disable-first-boot-user-rename": "1", 
                     "username": "pi", 
                     "password": "raspberry", 
-                    "release_url": ${{ steps.create_release.outputs.upload_url }}
+                    "release_url": "${{ steps.create_release.outputs.upload_url }}"
                 }
     
