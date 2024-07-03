@@ -1,0 +1,39 @@
+name: Build all images
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger-pi-gen:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build raspberrypi image
+        uses: benc-uk/workflow-dispatch@v1.1
+        with:
+          workflow: pi-gen.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          inputs: '{ "dev_name": "raspberrypi", "pi-gen-version": "arm64", "enable-ssh": "1", "stage-list": "stage0 stage1 stage2 stage3 stage4 stage4a", "wpa-country" : "us", "keyboard-keymap": "us", "disable-first-boot-user-rename": "0", "username": "pi", "password": "raspberry", "verbose-output": "false" }'
+
+      - name: build reComputer-R100x image
+        uses: benc-uk/workflow-dispatch@v1.1
+        with:
+            workflow: pi-gen.yml
+            token: ${{ secrets.GITHUB_TOKEN }}
+            inputs: '{ "dev_name": "reComputer-R100x", "pi-gen-version": "arm64", "enable-ssh": "1", "stage-list": "stage0 stage1 stage2 stage3 stage4 stage4a", "wpa-country" : "us", "keyboard-keymap": "us", "disable-first-boot-user-rename": "1", "username": "recomputer", "password": "12345678", "verbose-output": "false" }'
+
+      - name: build reTerminal image
+        uses: benc-uk/workflow-dispatch@v1.1
+        with:
+            workflow: pi-gen.yml
+            token: ${{ secrets.GITHUB_TOKEN }}
+            inputs: '{ "dev_name": "reTerminal", "pi-gen-version": "arm64", "enable-ssh": "1", "stage-list": "stage0 stage1 stage2 stage3 stage4 stage4a", "wpa-country" : "us", "keyboard-keymap": "us", "disable-first-boot-user-rename": "0", "username": "pi", "password": "raspberry", "verbose-output": "false" }'
+
+      - name: build reTerminal-plus image
+        uses: benc-uk/workflow-dispatch@v1.1
+        with:
+            workflow: pi-gen.yml
+            token: ${{ secrets.GITHUB_TOKEN }}
+            inputs: '{ "dev_name": "reTerminal-plus", "pi-gen-version": "arm64", "enable-ssh": "1", "stage-list": "stage0 stage1 stage2 stage3 stage4 stage4a", "wpa-country" : "us", "keyboard-keymap": "us", "disable-first-boot-user-rename": "1", "username": "pi", "password": "raspberry", "verbose-output": "false" }'
+    

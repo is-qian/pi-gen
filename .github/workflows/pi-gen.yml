@@ -62,7 +62,7 @@ on:
       verbose-output:
         description: 'Enable verbose output'
         required: true
-        default: 'false'
+        default: 'true'
         type: choice
         options:
           - true
@@ -154,6 +154,7 @@ jobs:
 
       
       - name: Uploading ${{ inputs.dev_name }} image to release
+        if: ${{ inputs.verbose-output }} == "false"
         uses: svenstaro/upload-release-action@v2
         id: release-step
         with:
@@ -169,6 +170,7 @@ jobs:
           target_commitish: ${{ github.sha }}
 
       - name: Get realease url
+        if: ${{ inputs.verbose-output }} == "false"
         run: |
          echo "RELEASE_URL=${{ steps.release-step.outputs.upload_url }}" >> $GITHUB_ENV
          echo "RELEASE_ID=${{ steps.release-step.outputs.id }} ${{ steps.release-step.outputs.upload_url }}" 
@@ -177,16 +179,16 @@ jobs:
         uses: actions/setup-python@v2
         
       - name: update README.md
+        if: ${{ inputs.verbose-output }} == "false"
         run: | 
          echo "## ${{ steps.build.outputs.image-path }} image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ env.ARTIFACT_URL }}" 
          python3 update_readme.py ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ inputs.username }} ${{ inputs.password }} ${{ inputs.enable-ssh }} "${{ inputs.stage-list }}" ${{ env.ARTIFACT_URL }}
 
       - name: Commit and push changes
+        if: ${{ inputs.verbose-output }} == "false"
         run: |
-          if [ "${{ inputs.verbose-output }}" == "false" ]; then
-            git config --local user.name "GitHub Action"
-            git config --local user.email "action@github.com"
-            git commit -a -m 'update ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} URL'
-            git push 
-            fi
+          git config --local user.name "GitHub Action"
+          git config --local user.email "action@github.com"
+          git commit -a -m 'update ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} URL'
+          git push 
         
