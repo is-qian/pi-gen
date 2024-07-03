@@ -6,13 +6,13 @@ on:
       - main
 
 jobs:
-  trigger-pi-gen:
+  Build-all-images:
     runs-on: ubuntu-latest
     steps:
       - name: build raspberrypi image
-        uses: benc-uk/workflow-dispatch@v1.1
+        uses: benc-uk/workflow-dispatch@v1
         with:
-          workflow: /.github/workflows/pi-gen.yml
+          workflow: Build pi-gen image
           token: ${{ secrets.GITHUB_TOKEN }}
           inputs: >-
             {
