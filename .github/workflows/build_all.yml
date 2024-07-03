@@ -13,7 +13,7 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-         tag_name: ${{ GITHUB_REF#refs/tags/ }}
+         tag_name: ${GITHUB_REF#refs/tags/}
          draft: false
          prerelease: true
 
