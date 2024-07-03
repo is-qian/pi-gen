@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: build raspberrypi image
-        uses: benc-uk/workflow-dispatch@v1
+        uses: benc-uk/workflow-dispatch@v1.1
         with:
           workflow: Build pi-gen image
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -31,7 +31,7 @@ jobs:
       - name: build reComputer-R100x image
         uses: benc-uk/workflow-dispatch@v1.1
         with:
-            workflow: /.github/workflows/pi-gen.yml
+            workflow: Build pi-gen image
             token: ${{ secrets.GITHUB_TOKEN }}
             inputs: >-
                 {
@@ -50,7 +50,7 @@ jobs:
       - name: build reTerminal image
         uses: benc-uk/workflow-dispatch@v1.1
         with:
-            workflow: /.github/workflows/pi-gen.yml
+            workflow: Build pi-gen image
             token: ${{ secrets.GITHUB_TOKEN }}
             inputs: >-
                 {
@@ -69,7 +69,7 @@ jobs:
       - name: build reTerminal-plus image
         uses: benc-uk/workflow-dispatch@v1.1
         with:
-            workflow: /.github/workflows/pi-gen.yml
+            workflow: Build pi-gen image
             token: ${{ secrets.GITHUB_TOKEN }}
             inputs: >-
                 {
