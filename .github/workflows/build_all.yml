@@ -11,9 +11,9 @@ jobs:
     steps:
       - name: Creat release
         id: create_release
-        uses: softprops/action-gh-release@v1
+        uses: actions/create-release@v1.1.4
         with:
-         tag_name: ${GITHUB_REF#refs/tags/}
+         tag_name: ${{ github.ref_name }}
          draft: false
          prerelease: true
 
