@@ -162,10 +162,8 @@ jobs:
           asset_name: ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}
           tag: ${{ github.ref }}
           overwrite: true
-          body: "Raspbian ${{ inputs.dev_name }} image"
           file_glob: true
-          release_name: ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}
-          prerelease: false
+          release_name: "Raspbian image"
           draft: false
           allow_update: true
           target_commitish: ${{ github.sha }}
