@@ -166,6 +166,7 @@ jobs:
           upload_url: ${{ inputs.release_url }}
           asset_path: ${{ steps.build.outputs.image-path }}
           asset_name: Raspbian-${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}
+          asset_content_type: application/zip
 
       - name: Get realease url
         if: ${{ env.UPLOAD_TO_RELEASE }} == "false"
