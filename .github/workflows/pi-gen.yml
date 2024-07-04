@@ -181,7 +181,7 @@ jobs:
         run: | 
          git config --local user.name "GitHub Action"
          git config --local user.email "action@github.com"
-         git pull
+         git fetch
          echo "## ${{ steps.build.outputs.image-path }} image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ env.ARTIFACT_URL }} ${{ env.RELEASE_URL }}" 
          python3 update_readme.py ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ inputs.username }} ${{ inputs.password }} ${{ inputs.enable-ssh }} "${{ inputs.stage-list }}" ${{ env.ARTIFACT_URL }}
 

@@ -17,7 +17,6 @@ jobs:
         with:
          tag_name: ${{ github.ref_name }}
          draft: false
-         prerelease: true
 
       - name: build raspberrypi image
         uses: benc-uk/workflow-dispatch@v1.1
