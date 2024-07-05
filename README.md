@@ -6,7 +6,7 @@
 
 | Name                  |   username & password   | enable-ssh |        stage-list       |      date      |
 |-----------------------|-------------------------|------------|-------------------------|----------------|
-| raspberrypi-arm64     | pi & raspberry          | 1          | stage0 stage1 stage2 stage3 stage4 stage4a | [2024-06-24](https://github.com/is-qian/pi-gen/actions/runs/9641251531/artifacts/1630637877)|
+| raspberrypi-arm64     | pi & raspberry          | 1          | stage0 stage1 stage2 stage3 stage4 | [2024-07-05](https://github.com/is-qian/pi-gen/releases/download/v1.1.3/Raspbian-raspberrypi-arm64)|
 | reTerminal-arm64      | pi & raspberry          | 1          | stage0 stage1 stage2 stage3 stage4 stage4a | [2024-07-03](https://github.com/is-qian/pi-gen/actions/runs/9772615711/artifacts/1662620401)|
 | reTerminal-plus-arm64 | pi & raspberry          | 1          | stage0 stage1 stage2 stage3 stage4 stage4a | [2024-07-03](https://github.com/is-qian/pi-gen/actions/runs/9772615759/artifacts/1662621434)|
 | reComputer-R100X-arm64|                         |            |                         |   [DATE](NULL) |
