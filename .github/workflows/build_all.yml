@@ -17,7 +17,6 @@ jobs:
   Build-all-images:
     runs-on: ubuntu-latest
     steps:
-      # 判断触发事件是tag还是workflow_dispatch, 如果是workflow_dispatch则获取输入的tag_name
       - name: Check tag
         id: check_tag
         run: |
@@ -29,7 +28,7 @@ jobs:
 
       - name: Creat release
         id: create_release
-        uses: actions/create-release@v1.1.4
+        uses: actions/create-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
