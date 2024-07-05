@@ -9,15 +9,6 @@ jobs:
   Build-all-images:
     runs-on: ubuntu-latest
     steps:
-      - name: Creat release
-        id: create_release
-        uses: actions/create-release@v1.1.4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-         tag_name: ${{ github.ref_name }}
-         draft: false
-
       - name: build raspberrypi image
         uses: benc-uk/workflow-dispatch@v1.1
         with:
