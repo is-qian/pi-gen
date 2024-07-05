@@ -152,10 +152,6 @@ jobs:
           name: Raspbian-${{ inputs.dev_name }}-${{ inputs.pi-gen-version }}
           path: ${{ steps.build.outputs.image-path }}
 
-      - name: get Artifact download URL
-        run: |
-          echo "ARTIFACT_URL=${{ steps.artifact-upload-step.outputs.artifact-url }}" >> $GITHUB_ENV
-
       - name: Uploading ${{ inputs.dev_name }} image to release
         id: release-step
         if: ${{ env.UPLOAD_TO_RELEASE }} == "false"
@@ -183,8 +179,8 @@ jobs:
          git config --local user.email "action@github.com"
          git checkout -b main
          git fetch
-         echo "## ${{ steps.build.outputs.image-path }} image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ env.ARTIFACT_URL }} ${{ env.RELEASE_URL }}" 
-         python3 update_readme.py ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ inputs.username }} ${{ inputs.password }} ${{ inputs.enable-ssh }} "${{ inputs.stage-list }}" ${{ env.ARTIFACT_URL }}
+         echo "## ${{ steps.build.outputs.image-path }} image  ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ env.RELEASE_URL }}" 
+         python3 update_readme.py ${{ inputs.dev_name }}-${{ inputs.pi-gen-version }} ${{ inputs.username }} ${{ inputs.password }} ${{ inputs.enable-ssh }} "${{ inputs.stage-list }}" ${{ env.RELEASE_URL }}
 
       - name: Commit and push changes
         if: ${{ env.UPLOAD_TO_RELEASE }} == "false"
