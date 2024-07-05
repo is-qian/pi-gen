@@ -10,7 +10,7 @@ on:
       tag_name:
         description: 'Tag name'
         required: true
-        default: 'v1.0'
+        default: 'v1.0.0'
         type: string
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
 
       - name: Creat release
         id: create_release
-        uses: actions/create-release@v2
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
