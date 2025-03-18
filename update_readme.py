@@ -23,12 +23,12 @@ if __name__ == '__main__':
 
     # 尝试在表格中找到devname对应的行并更新
     for i, line in enumerate(lines):
-        if f"| {devname} " in line:
+        if f"| {devname}" in line:
             # 更新找到的行
             updated_line = line.split('|')
             updated_line[2] = f" {username_password.ljust(23)} "
             updated_line[3] = f" {enable_ssh.ljust(10)} "  # 假设enable-ssh字段宽度为12，包括1个空格
-            updated_line[4] = f" {stage_list.ljust(23)} "  # 假设stage-list字段宽度为24，包括1个空格
+            updated_line[4] = f" {stage_list.ljust(43)} "  # 假设stage-list字段宽度为24，包括1个空格
             updated_line[5] = f" [{current_date}]({http})"
             lines[i] = '|'.join(updated_line)
             devname_found = True
@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     # 如果devname不存在，则在表格下方新增一行
     if not devname_found:
-        new_line = f"| {devname.ljust(21)} | {username_password.ljust(23)} | {enable_ssh.ljust(10)} | {stage_list.ljust(23)} | [{current_date}]({http}) |\n"
+        new_line = f"| {devname.ljust(21)} | {username_password.ljust(23)} | {enable_ssh.ljust(10)} | {stage_list.ljust(43)} | [{current_date}]({http}) |\n"
         # 找到表格结束的位置（假设表格之后是空行或者文件结束）
         for i, line in enumerate(lines):
             if len(line.strip()) == 0 and i > 6:

@@ -28,9 +28,13 @@ if [ -f "purges" ]; then
 	log "Begin ${SUB_STAGE_DIR}/purges"
 	PACKAGES="$(sed -f "${SCRIPT_DIR}/remove-comments.sed" < "purges")"
 	if [ -n "$PACKAGES" ]; then
-		on_chroot << EOF
-apt-get autoremove --purge -y $PACKAGES
+		set +e
+		for i in $PACKAGES; do
+			on_chroot << EOF
+apt-get autoremove --purge -y $i
 EOF
+		done
+		set -e
 		if [ "${USE_QCOW2}" = "1" ]; then
 			on_chroot << EOF
 apt-get clean
@@ -82,5 +86,16 @@ fi
 if [ "${FIRST_USER_NAME}" != "root" ]; then
 	on_chroot << EOF
 chown -vR ${FIRST_USER_NAME}:${FIRST_USER_NAME} /home/${FIRST_USER_NAME}/.config
+EOF
+fi
+
+if [ -f "postrun.sh" ]; then
+    log "Begin ${SUB_STAGE_DIR}/postrun.sh"
+    cp ./postrun.sh ${ROOTFS_DIR}/tmp/postrun.sh
+    on_chroot << EOF
+cd /tmp
+chmod +x postrun.sh
+sudo ./postrun.sh
+rm -fv postrun.sh
 EOF
 fi
